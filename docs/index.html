@@ -54,9 +54,10 @@
 </section>
 
 <section id="gigs">
-  <h2>GI-GS and ours, step by step</h2>
-  <p>Both models start from the same reconstructed geometry and are trained on the same images under one sky;
-     only how the light is computed differs. First the relit image, then its direct and indirect parts.</p>
+  <h2>Same quality as GI-GS</h2>
+  <p>Faster does not mean worse. Both models below start from the same reconstructed geometry and are trained
+     on the same images under one sky; only how the light is computed differs. First the relit image, then its
+     direct and indirect parts.</p>
   <div class="env-group"><span class="env-label">Trained under</span><div class="env-row"><figure><img src="assets/env/courtyard.jpg" alt="courtyard environment map" loading="lazy"><figcaption>courtyard</figcaption></figure></div></div>
   <div class="env-group"><span class="env-label">Relit under</span><div class="env-row"><figure><img src="assets/env/qwantani_noon.jpg" alt="noon environment map" loading="lazy"><figcaption>noon</figcaption></figure></div><span class="env-note">rotating &plusmn;60&deg;, not seen in training</span></div>
   <figure class="full">
@@ -78,21 +79,6 @@
   <figure class="full">
     <img class="still" src="assets/poster/qual_lego_fireplace.jpg" alt="Lego relit under fireplace: ground truth, GS-IR, GI-GS, ours" loading="lazy">
     <figcaption>Lego relit under <i>fireplace</i>: ground truth &nbsp;|&nbsp; GS-IR &nbsp;|&nbsp; GI-GS &nbsp;|&nbsp; ours.</figcaption>
-  </figure>
-</section>
-
-<section id="day">
-  <h2>One checkpoint, a whole day of sky</h2>
-  <p>A single reconstruction, re-lit from dawn to moonlit night. None of these skies was seen
-     during training.</p>
-  <div class="env-group"><span class="env-label">Trained under</span><div class="env-row"><figure><img src="assets/env/courtyard.jpg" alt="courtyard environment map" loading="lazy"><figcaption>courtyard</figcaption></figure><figure><img src="assets/env/sunrise.jpg" alt="sunrise environment map" loading="lazy"><figcaption>sunrise</figcaption></figure><figure><img src="assets/env/snow.jpg" alt="snow environment map" loading="lazy"><figcaption>snow</figcaption></figure><figure><img src="assets/env/forest.jpg" alt="forest environment map" loading="lazy"><figcaption>forest</figcaption></figure><figure><img src="assets/env/night.jpg" alt="night environment map" loading="lazy"><figcaption>night</figcaption></figure></div></div>
-  <div class="env-group"><span class="env-label">Relit under</span><div class="env-row"><figure><img src="assets/env/qwantani_dawn.jpg" alt="dawn environment map" loading="lazy"><figcaption>dawn</figcaption></figure><figure><img src="assets/env/qwantani_morning.jpg" alt="morning environment map" loading="lazy"><figcaption>morning</figcaption></figure><figure><img src="assets/env/qwantani_noon.jpg" alt="noon environment map" loading="lazy"><figcaption>noon</figcaption></figure><figure><img src="assets/env/qwantani_sunset.jpg" alt="sunset environment map" loading="lazy"><figcaption>sunset</figcaption></figure><figure><img src="assets/env/qwantani_dusk_1.jpg" alt="dusk environment map" loading="lazy"><figcaption>dusk</figcaption></figure><figure><img src="assets/env/qwantani_night.jpg" alt="night environment map" loading="lazy"><figcaption>night</figcaption></figure></div><span class="env-note">the Qwantani sky series, dawn to night (6 of 13 shown)</span></div>
-  <div class="picker" data-group="day"></div>
-  <figure class="full">
-    <video data-auto data-slot="day" muted loop playsinline preload="none" controls
-           poster="assets/poster/hotdog_day.jpg"
-           src="assets/video/hotdog_day.mp4"></video>
-    <figcaption>Ours (trained under 5 skies) next to a path-traced ground truth.</figcaption>
   </figure>
 </section>
 

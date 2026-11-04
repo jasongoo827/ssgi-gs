@@ -65,13 +65,13 @@ h2 {
   letter-spacing: -0.01em;
 }
 
-section > p { margin: 0 0 18px; color: var(--muted); max-width: 70ch; }
+section > p { margin: 0 0 18px; color: var(--muted); }
 
 .band { text-align: center; margin: 8px 0 44px; }
 
 .claim {
   margin: 0 auto;
-  max-width: 48ch;
+  max-width: 62ch;
   font-size: clamp(1.05rem, 2.5vw, 1.3rem);
   line-height: 1.5;
   color: var(--ink);
@@ -92,7 +92,6 @@ figcaption {
   margin-top: 10px;
   color: var(--muted);
   font-size: 0.9rem;
-  max-width: 80ch;
 }
 
 /* ---- object picker ---- */
@@ -148,7 +147,7 @@ figcaption {
 
 /* ---- limitations ---- */
 
-#limitations ul { margin: 0; padding-left: 1.2em; color: var(--muted); max-width: 75ch; }
+#limitations ul { margin: 0; padding-left: 1.2em; color: var(--muted); }
 #limitations li { margin-bottom: 10px; }
 #limitations b { color: var(--ink); font-weight: 600; }
 
@@ -179,3 +178,4 @@ figure.full img.still { width: 100%; display: block; border-radius: 10px; backgr
   .env-row figure { width: 84px; }
   .env-label { min-width: 100%; }
 }
+
