@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Screen-Space GI for Real-Time Relightable Gaussian Inverse Rendering</title>
-<meta name="description" content="Occlusion and indirect light recomputed whenever the lighting changes — in real time, with no precomputation.">
+<meta name="description" content="Indirect light recomputed every frame as the lighting changes — in real time, with no precomputation.">
 <meta property="og:title" content="Screen-Space GI for Real-Time Relightable Gaussian Inverse Rendering">
-<meta property="og:description" content="Occlusion and indirect light recomputed whenever the lighting changes — in real time, with no precomputation.">
-<meta property="og:image" content="assets/poster/moonrock_components.jpg">
+<meta property="og:description" content="Indirect light recomputed every frame as the lighting changes — in real time, with no precomputation.">
+<meta property="og:image" content="assets/poster/speed_lego.jpg">
 <meta property="og:type" content="website">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -27,34 +27,66 @@
 <main>
 
 <section class="band">
-  <p class="claim">Occlusion and indirect light are recomputed whenever the lighting changes —
+  <p class="claim">Indirect light is recomputed every frame as the lighting changes —
      in real time, with no precomputation.</p>
 </section>
 
-<section>
+<section id="speed">
+  <h2>Real time</h2>
+  <p>The same reconstruction rendered by three inverse-rendering methods along one camera path. Each panel is
+     replayed at the GPU frame times we measured, so while the camera moves at the same speed for all three,
+     a slower method shows a new image less often.</p>
   <figure class="full">
     <video data-auto muted loop playsinline preload="none" controls
-           poster="assets/poster/moonrock_components.jpg"
-           src="assets/video/moonrock_components.mp4"></video>
-    <figcaption>
-      Light bouncing off the green wall tints the left face of the white rock. Indirect light is
-      light that has bounced off another surface, and it is recomputed every frame as the sky turns —
-      nothing about this scene is baked.
-    </figcaption>
+           poster="assets/poster/speed_lego.jpg"
+           src="assets/video/speed_lego.mp4"></video>
+    <figcaption><b>GS-IR 20.4 FPS &nbsp;|&nbsp; GI-GS 7.5 FPS &nbsp;|&nbsp; ours 80.2 FPS.</b>
+      TensoIR lego, 800&times;800, RTX 5070. Frame times averaged over 600 views and two passes.
+      The poster reports the average over four scenes (85 FPS); lego is the slowest of the four for us (79&ndash;80 FPS).</figcaption>
   </figure>
 </section>
 
 <section class="numbers">
-  <div><b>85</b><span>FPS at 800&times;800</span></div>
+  <div><b>85</b><span>FPS at 800&times;800<br>(4-scene average)</span></div>
   <div><b>11.6&times;</b><span>faster than GI-GS</span></div>
   <div><b>+1.3 dB</b><span>relighting, unseen sky<br>(trained under 5 skies)</span></div>
-  <div><b>&plusmn;0.1 dB</b><span>relighting quality<br>vs. the baseline</span></div>
+  <div><b>&plusmn;0.1 dB</b><span>relighting quality<br>vs. GI-GS</span></div>
+</section>
+
+<section id="gigs">
+  <h2>GI-GS and ours, step by step</h2>
+  <p>Both models start from the same reconstructed geometry and are trained on the same images under one sky;
+     only how the light is computed differs. First the relit image, then its direct and indirect parts.</p>
+  <div class="env-group"><span class="env-label">Trained under</span><div class="env-row"><figure><img src="assets/env/courtyard.jpg" alt="courtyard environment map" loading="lazy"><figcaption>courtyard</figcaption></figure></div></div>
+  <div class="env-group"><span class="env-label">Relit under</span><div class="env-row"><figure><img src="assets/env/qwantani_noon.jpg" alt="noon environment map" loading="lazy"><figcaption>noon</figcaption></figure></div><span class="env-note">rotating &plusmn;60&deg;, not seen in training</span></div>
+  <figure class="full">
+    <video data-auto muted loop playsinline preload="none" controls
+           poster="assets/poster/gigs_vs_ours.jpg"
+           src="assets/video/gigs_vs_ours.mp4"></video>
+    <figcaption>GI-GS &nbsp;|&nbsp; ours. A reconstructed moon rock in a virtual corner; the walls are added at
+      render time and are not part of the reconstruction.</figcaption>
+  </figure>
+</section>
+
+<section id="tensoir">
+  <h2>Relighting on TensoIR</h2>
+  <p>The poster's qualitative comparison, with the environment maps behind it. All three methods are trained
+     under a single sky and relit under skies none of them saw. The figure uses <i>fireplace</i>; the relighting
+     numbers on the poster average all five relighting maps over four scenes.</p>
+  <div class="env-group"><span class="env-label">Trained under</span><div class="env-row"><figure><img src="assets/env/sunset.jpg" alt="sunset environment map" loading="lazy"><figcaption>sunset</figcaption></figure></div></div>
+  <div class="env-group"><span class="env-label">Relit under</span><div class="env-row"><figure><img src="assets/env/bridge.jpg" alt="bridge environment map" loading="lazy"><figcaption>bridge</figcaption></figure><figure><img src="assets/env/city.jpg" alt="city environment map" loading="lazy"><figcaption>city</figcaption></figure><figure><img src="assets/env/fireplace.jpg" alt="fireplace environment map" loading="lazy"><figcaption>fireplace</figcaption></figure><figure><img src="assets/env/forest.jpg" alt="forest environment map" loading="lazy"><figcaption>forest</figcaption></figure><figure><img src="assets/env/night.jpg" alt="night environment map" loading="lazy"><figcaption>night</figcaption></figure></div></div>
+  <figure class="full">
+    <img class="still" src="assets/poster/qual_lego_fireplace.jpg" alt="Lego relit under fireplace: ground truth, GS-IR, GI-GS, ours" loading="lazy">
+    <figcaption>Lego relit under <i>fireplace</i>: ground truth &nbsp;|&nbsp; GS-IR &nbsp;|&nbsp; GI-GS &nbsp;|&nbsp; ours.</figcaption>
+  </figure>
 </section>
 
 <section id="day">
   <h2>One checkpoint, a whole day of sky</h2>
   <p>A single reconstruction, re-lit from dawn to moonlit night. None of these skies was seen
      during training.</p>
+  <div class="env-group"><span class="env-label">Trained under</span><div class="env-row"><figure><img src="assets/env/courtyard.jpg" alt="courtyard environment map" loading="lazy"><figcaption>courtyard</figcaption></figure><figure><img src="assets/env/sunrise.jpg" alt="sunrise environment map" loading="lazy"><figcaption>sunrise</figcaption></figure><figure><img src="assets/env/snow.jpg" alt="snow environment map" loading="lazy"><figcaption>snow</figcaption></figure><figure><img src="assets/env/forest.jpg" alt="forest environment map" loading="lazy"><figcaption>forest</figcaption></figure><figure><img src="assets/env/night.jpg" alt="night environment map" loading="lazy"><figcaption>night</figcaption></figure></div></div>
+  <div class="env-group"><span class="env-label">Relit under</span><div class="env-row"><figure><img src="assets/env/qwantani_dawn.jpg" alt="dawn environment map" loading="lazy"><figcaption>dawn</figcaption></figure><figure><img src="assets/env/qwantani_morning.jpg" alt="morning environment map" loading="lazy"><figcaption>morning</figcaption></figure><figure><img src="assets/env/qwantani_noon.jpg" alt="noon environment map" loading="lazy"><figcaption>noon</figcaption></figure><figure><img src="assets/env/qwantani_sunset.jpg" alt="sunset environment map" loading="lazy"><figcaption>sunset</figcaption></figure><figure><img src="assets/env/qwantani_dusk_1.jpg" alt="dusk environment map" loading="lazy"><figcaption>dusk</figcaption></figure><figure><img src="assets/env/qwantani_night.jpg" alt="night environment map" loading="lazy"><figcaption>night</figcaption></figure></div><span class="env-note">the Qwantani sky series, dawn to night (6 of 13 shown)</span></div>
   <div class="picker" data-group="day"></div>
   <figure class="full">
     <video data-auto data-slot="day" muted loop playsinline preload="none" controls
@@ -65,9 +97,13 @@
 </section>
 
 <section id="rotation">
-  <h2>Turning the sky</h2>
-  <p>The environment map rotates &plusmn;60&deg; while the camera holds still. Training under a
-     single sky bakes that sky's colour into the material; training under five resolves it.</p>
+  <h2>Training under five skies</h2>
+  <p>Because a frame is cheap, we can train against five environment maps instead of one. Here the sky rotates
+     &plusmn;60&deg; while the camera holds still: trained under one sky, that sky's color is baked into the
+     material; trained under five, it is not.</p>
+  <div class="env-group"><span class="env-label">1 sky</span><div class="env-row"><figure><img src="assets/env/courtyard.jpg" alt="courtyard environment map" loading="lazy"><figcaption>courtyard</figcaption></figure></div></div>
+  <div class="env-group"><span class="env-label">5 skies</span><div class="env-row"><figure><img src="assets/env/courtyard.jpg" alt="courtyard environment map" loading="lazy"><figcaption>courtyard</figcaption></figure><figure><img src="assets/env/sunrise.jpg" alt="sunrise environment map" loading="lazy"><figcaption>sunrise</figcaption></figure><figure><img src="assets/env/snow.jpg" alt="snow environment map" loading="lazy"><figcaption>snow</figcaption></figure><figure><img src="assets/env/forest.jpg" alt="forest environment map" loading="lazy"><figcaption>forest</figcaption></figure><figure><img src="assets/env/night.jpg" alt="night environment map" loading="lazy"><figcaption>night</figcaption></figure></div></div>
+  <div class="env-group"><span class="env-label">Relit under</span><div class="env-row"><figure><img src="assets/env/qwantani_noon.jpg" alt="noon environment map" loading="lazy"><figcaption>noon</figcaption></figure></div><span class="env-note">rotating &plusmn;60&deg;</span></div>
   <div class="picker" data-group="rotation"></div>
   <figure class="full">
     <video data-auto data-slot="rotation" muted loop playsinline preload="none" controls
@@ -81,6 +117,8 @@
   <h2>What the indirect pass contributes</h2>
   <p>The same frames split into direct lighting, the indirect term our method adds, and their sum.
      Removing indirect light at inference costs 0.5–2.8 dB on these scenes, depending on the sky.</p>
+  <div class="env-group"><span class="env-label">Trained under</span><div class="env-row"><figure><img src="assets/env/courtyard.jpg" alt="courtyard environment map" loading="lazy"><figcaption>courtyard</figcaption></figure><figure><img src="assets/env/sunrise.jpg" alt="sunrise environment map" loading="lazy"><figcaption>sunrise</figcaption></figure><figure><img src="assets/env/snow.jpg" alt="snow environment map" loading="lazy"><figcaption>snow</figcaption></figure><figure><img src="assets/env/forest.jpg" alt="forest environment map" loading="lazy"><figcaption>forest</figcaption></figure><figure><img src="assets/env/night.jpg" alt="night environment map" loading="lazy"><figcaption>night</figcaption></figure></div></div>
+  <div class="env-group"><span class="env-label">Relit under</span><div class="env-row"><figure><img src="assets/env/qwantani_noon.jpg" alt="noon environment map" loading="lazy"><figcaption>noon</figcaption></figure></div><span class="env-note">rotating &plusmn;60&deg;</span></div>
   <div class="picker" data-group="components"></div>
   <figure class="full">
     <video data-auto data-slot="components" muted loop playsinline preload="none" controls
@@ -94,19 +132,18 @@
 <section id="limitations">
   <h2>Limitations</h2>
   <ul>
-    <li><b>No hard cast shadows.</b> The ground truth drops a shadow on the floor where ours does not;
-        the screen-space passes model occlusion and interreflection, not direct shadowing.</li>
-    <li><b>Objects are reconstructed in isolation</b> and composited into the virtual corner. The walls
-        are synthetic geometry introduced at inference time, not part of the reconstruction.</li>
-    <li><b>Quality trails the ray-marching baseline slightly</b> on novel-view synthesis, which is the
-        price of the speed-up.</li>
+    <li><b>Occlusion is computed from geometry alone</b>, so it does not follow the light. Rotating the sky leaves
+        the shaded regions where they were, and there are no hard cast shadows.</li>
+    <li><b>Reconstructed normals and depth are still too noisy on large flat surfaces</b>, which is why the demos
+        place a reconstructed object in a virtual corner rather than reconstructing the whole room.</li>
+    <li><b>Indirect specular is left out.</b> It needs Monte Carlo sampling we cannot afford at frame rate.</li>
   </ul>
 </section>
 
 </main>
 
 <footer>
-  <p>Page last updated <time datetime="2026-10-21">21 October 2026</time>.</p>
+  <p>Page last updated <time datetime="2026-11-04">4 November 2026</time>.</p>
 </footer>
 
 <script src="app.js"></script>

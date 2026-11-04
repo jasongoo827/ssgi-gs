@@ -163,3 +163,19 @@ footer {
   .numbers { grid-template-columns: repeat(2, 1fr); }
   .hero { padding: 36px 0 28px; }
 }
+
+/* ---- environment-map strips (added 2026-11-04) ---- */
+
+.env-group { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 0 0 10px; }
+.env-label { min-width: 7.5em; color: var(--muted); font-size: 0.85rem; }
+.env-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.env-row figure { margin: 0; width: 112px; }
+.env-row img { width: 100%; aspect-ratio: 2 / 1; display: block; border-radius: 4px; object-fit: cover; }
+.env-row figcaption { margin: 2px 0 0; font-size: 0.75rem; text-align: center; }
+.env-note { color: var(--muted); font-size: 0.8rem; }
+section > .env-group:last-of-type { margin-bottom: 16px; }
+figure.full img.still { width: 100%; display: block; border-radius: 10px; background: #000; }
+@media (max-width: 560px) {
+  .env-row figure { width: 84px; }
+  .env-label { min-width: 100%; }
+}
