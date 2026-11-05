@@ -54,6 +54,8 @@ main, header, footer { max-width: var(--maxw); margin: 0 auto; }
 }
 .btn.disabled { color: var(--muted); }
 a.btn:hover { border-color: var(--teal); color: var(--teal); }
+a.btn.primary { border-color: var(--accent); color: var(--accent); }
+a.btn.primary:hover { background: var(--accent); color: var(--bg); }
 
 /* ---- sections ---- */
 
